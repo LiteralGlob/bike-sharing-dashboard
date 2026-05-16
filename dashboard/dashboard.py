@@ -71,18 +71,24 @@ hour_df["workingday"] = hour_df["workingday"].map(workingday_map)
 
 st.sidebar.header("📌 Filter Dashboard")
 
+season_options = ["All Season"] + list(day_df["season"].unique())
+
 selected_season = st.sidebar.selectbox(
     "Pilih Musim",
-    options=day_df["season"].unique()
+    season_options
 )
 
-filtered_day_df = day_df[
-    day_df["season"] == selected_season
-]
+if selected_season == "All Season":
+    filtered_day_df = day_df
+    filtered_hour_df = hour_df
+else:
+    filtered_day_df = day_df[
+        day_df["season"] == selected_season
+    ]
 
-filtered_hour_df = hour_df[
-    hour_df["season"] == selected_season
-]
+    filtered_hour_df = hour_df[
+        hour_df["season"] == selected_season
+    ]
 
 # =========================
 # BUSINESS QUESTIONS
